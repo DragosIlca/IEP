@@ -1,0 +1,2 @@
+/home/sebi/Desktop/test/_install/lib/libtest.a
+/home/sebi/Desktop/test/_install/include/test.h

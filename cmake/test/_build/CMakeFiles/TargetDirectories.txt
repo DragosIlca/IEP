@@ -1,0 +1,7 @@
+/home/sebi/Desktop/test/_build/CMakeFiles/install/strip.dir
+/home/sebi/Desktop/test/_build/CMakeFiles/edit_cache.dir
+/home/sebi/Desktop/test/_build/CMakeFiles/list_install_components.dir
+/home/sebi/Desktop/test/_build/CMakeFiles/test.dir
+/home/sebi/Desktop/test/_build/CMakeFiles/install/local.dir
+/home/sebi/Desktop/test/_build/CMakeFiles/rebuild_cache.dir
+/home/sebi/Desktop/test/_build/CMakeFiles/install.dir
