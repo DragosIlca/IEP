@@ -6,10 +6,11 @@ using namespace std;
 class User { 
 
 public:
-	User(const string& firstName, const string& lastName, const string& address)
+	User(const string& firstName, const string& lastName, const string& address, const string& gender)
 	: firstName(firstName),
 	lastName(lastName),
-	address(address)
+	address(address),
+	gender(gender)
 	{};
     	
 	~User() {
@@ -21,32 +22,35 @@ public:
 		firstName = rhs.firstName;
 		lastName = rhs.lastName;
 		address = rhs.address;
+		gender = rhs.gender;
 		return *this;
 	};
 
 
 	void display() {
-		cout << firstName << " " << lastName << " " << address << "\n";		
+		cout << firstName << " " << lastName << " " << address << " " << gender <<"\n";		
 	}
 
 private:
 	string firstName;
 	string lastName;
 	string address;
+	string gender;
 
 	User(const User& rhs) {
 		cout << "Object copy constructor\n";	
 		firstName = rhs.firstName;
 		lastName = rhs.lastName;
 		address = rhs.address;
+		gender = rhs.gender;
 	};
 };
 
 int main() {
 		
-	User* sebi = new User("Sebi", "Haias", "Timisoara");
-	User* sebi2 = new User("Sebi2", "Haias2", "Timisoara2");
-	// User sebi3 = User("Sebi3", "Haias3", "Timisoara3"); not allowed due to private copy constructor
+	User* sebi = new User("Sebi", "Haias", "Timisoara", "male");
+	User* sebi2 = new User("Sebi2", "Haias2", "Timisoara2", "male");
+	// User andrei = User("Andrei", "Micle", "Bihor", "male"); not allowed due to private copy constructor
 
 	sebi->display();
 	sebi2->display();
