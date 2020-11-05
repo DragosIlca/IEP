@@ -68,11 +68,46 @@ public:
 	};
 };
 
+class Group {
+public:
+	Group(Admin* admin) : admin(admin) {cout << "Group constructor\n";};
+
+	Group& operator=(const Group& gr) {
+		cout << "Operator called\n";
+
+		Admin *aux = admin;
+		delete aux;
+		admin = new Admin(*gr.admin);
+
+		return *this;
+	}
+
+	~Group() {
+		cout << "Deleting group\n";
+	}
+	
+private:
+	Admin *admin;
+};
+
 int main()
 {
 	Admin *admin = new Admin("admin", "admin", "zeu", "zeu");
 	User *user = admin;
+	
+	Admin *admin2 = new Admin("admin2", "admin2", "zeu2", "zeu2");
+
+	Group *group1 = new Group(admin); 
+	Group *group2 = new Group(admin2);
+	
+	*group1=*group1;
+	*group2=*group2;
+
+	delete group1;
+	delete group2;
+
 	delete user;
+	delete admin2;
 
 	return 0;
 }
