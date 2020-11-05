@@ -49,17 +49,26 @@ protected:
 	};
 };
 
+<<<<<<< HEAD
 User::~User()
 {
+=======
+User::~User() {
+>>>>>>> 464cff039c839c61fb158e6504c12eb0f0184ee9
 	cout << "Destructing User\n";
 }
 
 class Admin : public User
 {
 public:
+<<<<<<< HEAD
 	Admin(const string &firstName, const string &lastName, const string &address, const string &gender, const int somer)
 		: User(firstName, lastName, address, gender),
 		  somer(somer)
+=======
+	Admin(const string &firstName, const string &lastName, const string &address, const string &gender)
+		: User(firstName, lastName, address, gender)
+>>>>>>> 464cff039c839c61fb158e6504c12eb0f0184ee9
 	{
 		cout << "Constructing Admin\n";
 	}
@@ -68,6 +77,7 @@ public:
 	{
 		cout << "Destructing Admin\n";
 	};
+<<<<<<< HEAD
 
 	Admin(const Admin &t) : User(t), somer(t.somer){};
 
@@ -134,6 +144,48 @@ int main()
 	delete group1;
 	delete group2;
 
+=======
+};
+
+class Group {
+public:
+	Group(Admin* admin) : admin(admin) {cout << "Group constructor\n";};
+
+	Group& operator=(const Group& gr) {
+		cout << "Operator called\n";
+
+		Admin *aux = admin;
+		delete aux;
+		admin = new Admin(*gr.admin);
+
+		return *this;
+	}
+
+	~Group() {
+		cout << "Deleting group\n";
+	}
+	
+private:
+	Admin *admin;
+};
+
+int main()
+{
+	Admin *admin = new Admin("admin", "admin", "zeu", "zeu");
+	User *user = admin;
+	
+	Admin *admin2 = new Admin("admin2", "admin2", "zeu2", "zeu2");
+
+	Group *group1 = new Group(admin); 
+	Group *group2 = new Group(admin2);
+	
+	*group1=*group1;
+	*group2=*group2;
+
+	delete group1;
+	delete group2;
+
+>>>>>>> 464cff039c839c61fb158e6504c12eb0f0184ee9
 	delete user;
 	delete admin2;
 
