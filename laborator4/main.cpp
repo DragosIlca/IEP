@@ -3,21 +3,23 @@
 
 using namespace std;
 
-class User { 
+class User
+{
 
 public:
-	User(const string& firstName, const string& lastName, const string& address, const string& gender)
-	: firstName(firstName),
-	lastName(lastName),
-	address(address),
-	gender(gender)
-	{};
-    	
-	~User() {
-		cout << "Object destructed\n";	
+	User(const string &firstName, const string &lastName, const string &address, const string &gender)
+		: firstName(firstName),
+		  lastName(lastName),
+		  address(address),
+		  gender(gender)
+	{
+		cout << "Constructing User \n";
 	};
 
-	User& operator=(const User& rhs) {
+	virtual ~User() = 0;
+
+	User &operator=(const User &rhs)
+	{
 		cout << "Object copy assignement\n";
 		firstName = rhs.firstName;
 		lastName = rhs.lastName;
@@ -26,19 +28,20 @@ public:
 		return *this;
 	};
 
-
-	void display() {
-		cout << firstName << " " << lastName << " " << address << " " << gender <<"\n";		
+	void display()
+	{
+		cout << firstName << " " << lastName << " " << address << " " << gender << "\n";
 	}
 
-private:
+protected:
 	string firstName;
 	string lastName;
 	string address;
 	string gender;
 
-	User(const User& rhs) {
-		cout << "Object copy constructor\n";	
+	User(const User &rhs)
+	{
+		cout << "Object copy constructor\n";
 		firstName = rhs.firstName;
 		lastName = rhs.lastName;
 		address = rhs.address;
@@ -46,21 +49,30 @@ private:
 	};
 };
 
-int main() {
-		
-	User* sebi = new User("Sebi", "Haias", "Timisoara", "male");
-	User* sebi2 = new User("Sebi2", "Haias2", "Timisoara2", "male");
-	// User andrei = User("Andrei", "Micle", "Bihor", "male"); not allowed due to private copy constructor
+User::~User() {
+	cout << "Destructing User\n";
+}
 
-	sebi->display();
-	sebi2->display();
+class Admin : public User
+{
+public:
+	Admin(const string &firstName, const string &lastName, const string &address, const string &gender)
+		: User(firstName, lastName, address, gender)
+	{
+		cout << "Constructing Admin\n";
+	}
 
-	*sebi2 = *sebi;
+	~Admin()
+	{
+		cout << "Destructing Admin\n";
+	};
+};
 
-	sebi2->display();
-
-	delete sebi;
-	delete sebi2;
+int main()
+{
+	Admin *admin = new Admin("admin", "admin", "zeu", "zeu");
+	User *user = admin;
+	delete user;
 
 	return 0;
 }
