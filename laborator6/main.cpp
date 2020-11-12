@@ -114,6 +114,11 @@ private:
 	Admin *admin;
 };
 
+void provideAccess(Admin *admin)
+{
+	admin->display();
+};
+
 int main()
 {
 	std::auto_ptr<Admin> admin(new Admin("Dragos", "Ilca", "TM", "male", 0));
@@ -122,7 +127,9 @@ int main()
 	std::shared_ptr<Admin> admin2(admin1);
 	admin1 = admin2;
 
-	admin->display();
+	// item 15
+	provideAccess(admin.get());
+
 	admin1->display();
 	admin2->display();
 
