@@ -1,6 +1,6 @@
-#include <memory>
 #include <iostream>
 #include <string>
+#include <memory>
 
 using namespace std;
 
@@ -116,30 +116,15 @@ private:
 
 int main()
 {
-	std:auto_ptr<Admin> admin(new Admin("admin", "admin", "zeu", "zeu", 0));
-	User *user = admin;
+	std::auto_ptr<Admin> admin(new Admin("Dragos", "Ilca", "TM", "male", 0));
 
-	Admin *admin2 = new Admin("admin2", "admin2", "zeu2", "zeu2", 0);
-
-	Group *group1 = new Group(admin);
-	Group *group2 = new Group(admin2);
-
-	Admin *admin3 = new Admin(*admin);
-
-	std::auto_ptr<Admin> pUser(new Admin("admin", "admin", "zeu", "zeu", 0));
-
+	std::shared_ptr<Admin> admin1(new Admin("Sebastian", "Haias", "TM", "male", 0));
+	std::shared_ptr<Admin> admin2(admin1);
+	admin1 = admin2;
 
 	admin->display();
-	admin3->display();
-
-	*group1 = *group1;
-	*group2 = *group2;
-
-	delete group1;
-	delete group2;
-
-	delete user;
-	delete admin2;
+	admin1->display();
+	admin2->display();
 
 	return 0;
 }
