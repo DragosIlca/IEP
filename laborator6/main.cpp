@@ -1,8 +1,11 @@
 #include <iostream>
 #include <string>
 #include <memory>
+#include <mutex>
 
 using namespace std;
+
+std::mutex mtx;
 
 class User
 {
@@ -119,6 +122,16 @@ void provideAccess(Admin *admin)
 	admin->display();
 };
 
+
+void printInfo(std::shared_ptr<Admin> admin) 
+{
+	mtx.lock();
+	cout << "Mutex locked\n";
+	admin->display();
+	cout << "Mutex unlocked\n";
+	mtx.unlock();
+}
+
 int main()
 {
 	std::auto_ptr<Admin> admin(new Admin("Dragos", "Ilca", "TM", "male", 0));
@@ -127,6 +140,9 @@ int main()
 	std::shared_ptr<Admin> admin2(admin1);
 	admin1 = admin2;
 
+	printInfo(admin1);
+	printInfo(admin2);
+	
 	// item 15
 	provideAccess(admin.get());
 
