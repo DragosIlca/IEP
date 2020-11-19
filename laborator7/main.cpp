@@ -2,6 +2,7 @@
 #include <string>
 #include <memory>
 #include <mutex>
+#include <string.h>
 
 using namespace std;
 
@@ -35,7 +36,11 @@ public:
 	void display()
 	{
 		cout << firstName << " " << lastName << " " << address << " " << gender << "\n";
-	}
+	};
+
+	string getAddress() const {
+		return address;
+	};
 
 protected:
 	string firstName;
@@ -113,6 +118,10 @@ public:
 		cout << "Deleting group\n";
 	}
 
+	Admin* getAdmin() {
+		return admin;
+	}
+
 private:
 	Admin *admin;
 };
@@ -132,6 +141,10 @@ void printInfo(std::shared_ptr<Admin> admin)
 	mtx.unlock();
 }
 
+int validateUser(const User& u) {
+	return strcmp(u.getAddress().c_str(), "") != 0;
+}
+
 int main()
 {
 	std::auto_ptr<Admin> admin(new Admin("Dragos", "Ilca", "TM", "male", 0));
@@ -145,6 +158,8 @@ int main()
 	
 	// item 15
 	provideAccess(admin.get());
+
+	cout << validateUser(*admin.get()) << "\n";
 
 	admin1->display();
 	admin2->display();
