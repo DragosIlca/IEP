@@ -1,12 +1,37 @@
 #include <iostream>
 #include <string>
 #include <memory>
-#include <mutex>
 #include <string.h>
 
 using namespace std;
 
-std::mutex mtx;
+// item 18
+struct NrOfPages {
+	explicit NrOfPages(int nrOfPages)
+	: val(nrOfPages) {}
+	int val;
+};
+
+// item 18
+struct NrOfChapters {
+	explicit NrOfChapters(int nrOfChapters)
+	: val(nrOfChapters) {}
+	int val;
+};
+
+// item 18
+class Book {
+public:
+	Book(const NrOfPages& nrOfPages, const NrOfChapters& nrOfChapters)
+		: nrOfPages(nrOfPages),
+		  nrOfChapters(nrOfChapters)
+	{};
+
+private:
+	NrOfChapters nrOfChapters;
+	NrOfPages nrOfPages;
+};
+
 
 class User
 {
@@ -132,15 +157,6 @@ void provideAccess(Admin *admin)
 };
 
 
-void printInfo(std::shared_ptr<Admin> admin) 
-{
-	mtx.lock();
-	cout << "Mutex locked\n";
-	admin->display();
-	cout << "Mutex unlocked\n";
-	mtx.unlock();
-}
-
 int validateUser(const User& u) {
 	return strcmp(u.getAddress().c_str(), "") != 0;
 }
@@ -152,12 +168,12 @@ int main()
 	std::shared_ptr<Admin> admin1(new Admin("Sebastian", "Haias", "TM", "male", 0));
 	std::shared_ptr<Admin> admin2(admin1);
 	admin1 = admin2;
-
-	printInfo(admin1);
-	printInfo(admin2);
 	
 	// item 15
 	provideAccess(admin.get());
+
+	// item 18
+	Book *book = new Book(NrOfPages(100), NrOfChapters(10));
 
 	cout << validateUser(*admin.get()) << "\n";
 
