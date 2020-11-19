@@ -62,17 +62,33 @@ public:
 	{
 		cout << firstName << " " << lastName << " " << address << " " << gender << "\n";
 	};
+	
+	//item 22
 
 	string getAddress() const {
 		return address;
 	};
+	
+		string getFirstName() const {
+		return firstName;
+	};
+	
+		string getLastName() const {
+		return lastName;
+	};
+	
+		string getGender() const {
+		return gender;
+	};
 
-protected:
+
+private:
 	string firstName;
 	string lastName;
 	string address;
 	string gender;
 
+protected: 
 	User(const User &rhs)
 	{
 		cout << "Object copy constructor\n";
@@ -112,12 +128,7 @@ public:
 		return *this;
 	}
 
-	void display()
-	{
-		cout << firstName << " " << lastName << " " << address << " " << gender << " " << somer << "\n";
-	}
-
-private:
+public:
 	// 0 sau 1
 	int somer;
 };
