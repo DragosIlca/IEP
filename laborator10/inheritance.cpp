@@ -67,11 +67,55 @@ class Chicken: public Bird{
         };
 };
 
+class Ostrich : public Bird {
+    private:
+        static Ostrich* instance;
+        int chickens = 0;
+        Ostrich() {};
+
+    public:
+        static Ostrich* getInstance() {
+            if (!instance)
+                instance = new Ostrich();
+            return instance;
+        }
+
+        Ostrich& operator+(const Chicken& c) {
+            chickens++;
+            Chicken::count--;
+        
+            return *this;    
+        }
+
+        void virtual sound() {
+            cout << "Strut\n";
+        }
+
+        void virtual fly() {
+            cout << "Nu mere\n";
+        }
+
+        int getNumberOfChickens() {
+            return chickens;
+        }
+};
+
+Ostrich *Ostrich::instance = 0;
+
 int Chicken::count = 0;
 
 Chicken *grup[30];
 
 int main() {
+    Chicken *c = new Chicken();
+    *Ostrich::getInstance() + *c;
+
+    cout << Ostrich::getInstance()->getNumberOfChickens() << "\n";
+    cout << Chicken::count << "\n";
+
+    Ostrich::getInstance()->fly();
+    Ostrich::getInstance()->sound();
+    
 
     std::vector<std::string> words;
     words.push_back("Mama");
@@ -93,5 +137,8 @@ int main() {
 
     chicken->fly();
     chicken->sound();
+
+    delete c;
+
     return 0;
 }
