@@ -25,6 +25,35 @@ public:
     }
 };
 
+class Circle
+{
+public:
+    static Circle &getInstance()
+    {
+        static Circle instance; //// Guaranteed to be destroyed.
+
+        return instance;
+    };
+    string template(Point point)
+    {
+        if (pow(point.x - circleOrigin.x, 2) + pow(point.y - circleOrigin.y, 2) == pow(rad, 2))
+        {
+            std::cout << "The figure is inside the circle.";
+        }
+        else
+        {
+            std::cout << "The figure is outside the circle.";
+        }
+    };
+
+private:
+    int rad;
+    Point circleOrigin;
+    Circle(){};
+    Circle(Circle const &);
+    void operator=(Circle const &);
+};
+
 class Square : public Figure
 {
 protected:
