@@ -5,57 +5,180 @@
 
 using namespace std;
 
-class Point {
-    public: 
-        int x, y;
-
-        Point(int x, int y) : x(x), y(y) {};
+class Point
+{
+public:
+    int x, y;
 };
 
-class Figure {
-    private:
-        std::vector<Point> points;
+class Figure
+{
+protected:
+    std::vector<Point> points;
 
-    public: 
-        Figure(std::vector<Point> points): points(points) {};
+public:
+    Figure(std::vector<Point> points) : points(points){};
 
-        std::vector<Point> getPoints() {
-            return points;
-        }
+    std::vector<Point> getPoints()
+    {
+        return points;
+    }
 };
 
-class Diamond : public Figure {
-    public:
-        Diamond(std::vector<Point> points) : Figure(points) {};
+class Square : public Figure
+{
+protected:
+    std::vector<Point> points;
+
+public:
+    Square(std::vector<Point> points) : Figure(points){};
 };
 
-template<typename T>
-float getSlope(T &figure) {
+class Triangle : public Figure
+{
+protected:
+    std::vector<Point> points;
+
+public:
+    Triangle(std::vector<Point> points) : Figure(points){};
+};
+
+class Rectangle : public Figure
+{
+protected:
+    std::vector<Point> points;
+
+public:
+    Rectangle(std::vector<Point> points) : Figure(points){};
+};
+
+template <typename T>
+float getSlope(T &figure)
+{
     static_assert(std::is_base_of<Figure, T>::value, "Must be of type Figure");
 
-    std::vector<Point> localPoints = figure.getPoints();
-    
-    if (localPoints.size() >= 2) {
+    std::vector<Point> localPoints = figure->getPoints();
+
+    if (localPoints.size() >= 2)
+    {
         return (localPoints[1].y - localPoints[0].y) / (localPoints[1].x - localPoints[0].x);
     }
 
-    else {
+    else
+    {
         cout << "Nu se poate frate, nu s destule puncte\n ";
         return 0;
     }
 }
 
-int main() {
-    Point p1(1, 3);
-    Point p2(2, 6);
+int main()
+{
 
-    std::vector<Point> points;
-    points.push_back(p1);
-    points.push_back(p2);
+    int c;
+    Square *s;
+    Triangle *t;
+    Rectangle *r;
 
-    Diamond f1(points);
+    while (1)
+    {
+        cout << "Choose an option\n";
+        cout << "1 -> Add square\n";
+        cout << "2 -> Add triangle\n";
+        cout << "3 -> Add rectangle\n";
+        cout << "4 -> Add circle\n";
+        cout << "5 -> Panta square\n";
+        cout << "6 -> Panta triangle\n";
+        cout << "7 -> Panta rectangle\n";
+        cout << "5 -> Afiseaza panta dreptei\n";
+        cin >> c;
+        switch (c)
+        {
+        case 1:
+        {
+            std::vector<Point> sPoints;
+            for (int i = 0; i < 4; i++)
+            {
+                int x, y;
+                cout << "x for point is: ?\n";
+                cin >> x;
+                cout << "y for point is: ?\n";
+                cin >> y;
+                Point p;
+                p.x = x;
+                p.y = y;
+                sPoints.push_back(p);
+            }
+            s = new Square(sPoints);
+        }
 
-    cout << getSlope(f1) << "\n";
+        break;
+        case 2:
+        {
+            std::vector<Point> tPoints;
+            for (int i = 0; i < 3; i++)
+            {
+                int x, y;
+                cout << "x for point is: ?\n";
+                cin >> x;
+                cout << "y for point is: ?\n";
+                cin >> y;
+                Point p;
+                p.x = x;
+                p.y = y;
+                tPoints.push_back(p);
+            }
+            t = new Triangle(tPoints);
+            break;
+        }
+
+        case 3:
+        {
+            std::vector<Point> rPoints;
+            for (int i = 0; i < 3; i++)
+            {
+                int x, y;
+                cout << "x for point is: ?\n";
+                cin >> x;
+                cout << "y for point is: ?\n";
+                cin >> y;
+                Point p;
+                p.x = x;
+                p.y = y;
+                rPoints.push_back(p);
+            }
+            r = new Rectangle(rPoints);
+            break;
+        }
+
+        case 4:
+            cout << "Not implemented";
+            break;
+
+        case 5:
+        {
+            cout << "Panta este: ";
+            cout << getSlope(s) << "\n";
+        }
+        break;
+
+        case 6:
+        {
+            cout << "Panta este: ";
+            cout << getSlope(s) << "\n";
+        }
+        break;
+
+        case 7:
+        {
+            cout << "Panta este: ";
+            cout << getSlope(s) << "\n";
+        }
+        break;
+
+        default:
+            break;
+        }
+    }
 
     return 0;
 }
